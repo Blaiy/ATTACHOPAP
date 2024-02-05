@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- Students table
 CREATE TABLE students (
     studentid INT AUTO_INCREMENT PRIMARY KEY,
@@ -16,4 +17,6 @@ CREATE TABLE pwdreset (
     pwdResetToken LONGTEXT NOT NULL,
     pwdResetExpires TEXT NOT NULL
 );
+=======
+>>>>>>> a88fea83ac0e8e13f6a29ca10512afe18e517784
 
