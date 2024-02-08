@@ -14,8 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $course = isset($_POST["course"]) ? $_POST["course"] : '';
     $institution = isset($_POST["institution"]) ? $_POST["institution"] : '';
 
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
     // Insert data into the database
-    $sql = "INSERT INTO students (fullname, email, password, course, institution) VALUES ('$fullname', '$email', '$password', '$course', '$institution')";
+    $sql = "INSERT INTO students (fullname, email, password, course, institution) VALUES ('$fullname', '$email', '$hashed_password', '$course', '$institution')";
 
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
