@@ -44,7 +44,7 @@ if (isset($_POST["reset-request-submit"])) {
     $message = '<p>Please click the following link to reset your password: <a href="' . $url . '">' . $url . '</a></p>';
     mail($userEmail, $subject, $message, $headers);
 
-    $success_message = 'Please check your email to reset your password';
+    header("Location: ../login.html?reset=success");
 } else {
     header("Location: ../index.php");
 }
