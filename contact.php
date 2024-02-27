@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>JobsConnect</title>
+    <title>AttachoPap</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -131,7 +131,7 @@
                                     <div class="bg-white border rounded d-flex flex-shrink-0 align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
                                         <i class="fa fa-envelope-open text-primary"></i>
                                     </div>
-                                    <span>jobs@JobsConnect.com</span>
+                                    <span>attachopap.com</span>
                                 </div>
                             </div>
                             <div class="col-md-4 wow fadeIn" data-wow-delay="0.5s">
