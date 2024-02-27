@@ -1,3 +1,20 @@
+<?php
+include 'connect.php';
+$stmt = $conn->prepare("SELECT * FROM regions GROUP BY county_id ORDER BY county_name");
+$stmt->execute();
+$result = $stmt->get_result();
+$counties = $result->fetch_all(MYSQLI_ASSOC);
+
+$selectedCounty = isset($_POST['county']) ? $_POST['county'] : (isset($_GET['county']) ? $_GET['county'] : null);
+
+$stmt = $conn->prepare("SELECT * FROM regions WHERE county_name = ?");
+$stmt->bind_param("s", $selectedCounty);
+$stmt->execute();
+$result = $stmt->get_result();
+$constituencies = $result->fetch_all(MYSQLI_ASSOC);
+
+?>
+
 <style>
 
 .sgn {
@@ -125,7 +142,7 @@
 
     </div>
     <div id="menu1" class="tab-pane fade"  style="width: 50%;">
-      <h3 style="color: white; padding-left: 30px;">Register as Job Seeker</h3>
+      <h3 style="color: white; padding-left: 30px;">Register as Student</h3>
       <form class="cd-form" method="post" action="registerStudent.php" enctype="multipart/form-data">
 					<p class="fieldset" style="padding-right: 30px;">
 						<label class="image-replace cd-username" for="empsignup-username">Username</label>
@@ -143,16 +160,38 @@
               <a href="#0" class="hide-password" style="padding-right: 70px;">Show</a>
 					</p>
           <p class="fieldset" style="padding-right: 30px;">
-						<label class="image-replace cd-username" for="empsignup-username">Qualification</label>
-						<input class="full-width has-padding has-border" id="qlf" name="qlf" type="text" placeholder="Qualification">
+						<label class="image-replace cd-username" for="empsignup-username">University</label>
+						<select class="form-control" id="uni" name="uni" placeholder="Select University/Collage">
+            <?php include "institutionOptions.php"; ?>
+            </select>
 					</p>
+
+          <p class="fieldset" style="padding-right: 30px;">
+          <label class="image-replace cd-username" for="empsignup-username">County</label>
+              <select id="county" name="county" class="form-control" onchange="fetchConstituencies()">
+                  <option value="">Select County</option>
+                  <?php foreach ($counties as $county): ?>
+                      <option value="<?= $county['county_id'] ?>"><?= $county['county_name'] ?></option>
+                  <?php endforeach; ?>
+              </select>
+          </p>
+
+          <p class="fieldset" style="padding-right: 30px;">
+          <label class="image-replace cd-username" for="empsignup-username">Constituency</label>
+              <select id="constituency" name="constituency" class="form-control">
+                  <option value="">Select Constituency</option>
+              </select>
+          </p>
+
           <p class="fieldset" style="padding-right: 30px;">
               <label class=" image-replace cd-username" for="empsignup-username">Date of Birth</label>
               <input class="full-width has-padding has-border" id="dob" name="dob" type="date" placeholder="date of birth">
 					</p>
           <p class="fieldset" style="padding-right: 30px;">
-						<label class="image-replace cd-username" for="empsignup-username">skills</label>
-            <input class="full-width has-padding has-border" id="skills" name="skills" type="text" placeholder="skills">
+						<label class="image-replace cd-username" for="empsignup-username">Course</label>
+            <select class="form-control" id="course" name="course" placeholder="Select Your Course">
+              <?php include "courseOptions.php"; ?>
+            </select>
 					</p>
                                         
                                        
@@ -204,3 +243,27 @@
 </div>
   </div> 
   <script src="js/registerUser.js"></script>	
+
+  <script>
+    function fetchConstituencies() {
+    var countyId = document.getElementById('county').value;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'get_constituencies.php?county_id=' + countyId, true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            var constituencies = JSON.parse(xhr.responseText);
+            var constituencyDropdown = document.getElementById('constituency');
+            constituencyDropdown.innerHTML = '<option value="">Select Constituency</option>';
+            constituencies.forEach(function (constituency) {
+                var option = document.createElement('option');
+                option.value = constituency['constituency_name'];
+                option.textContent = constituency['constituency_name'];
+                constituencyDropdown.appendChild(option);
+            });
+        } else {
+            console.log('Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send();
+}
+  </script>

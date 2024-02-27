@@ -149,73 +149,93 @@
             <!-- sum of posts -->
             <?php
             include 'connect.php';
-            $sql = "select * from `totalposts`";
+            $sql = "select count(*) as post_count from post";
             $totalresult = $conn->query($sql);
             if ($totalresult->num_rows > 0) {
-              while ($row = $totalresult->fetch_assoc()) {
-                $numberofposts = $row['AllPosts'];
+              $row = $totalresult->fetch_assoc();
+              $post_count = $row['post_count'];
             ?>
-                <h3 style="font-family: 'Schoolbell', cursive; font-family: 'Vollkorn', serif; color: #f2cc8f; padding-left:4px;"> Total Job Posts Available: <?php echo $numberofposts; ?> </h3>
+                <h3 style="font-family: 'Schoolbell', cursive; font-family: 'Vollkorn', serif; color: #f2cc8f; padding-left:4px;"> Total Job Posts Available: <?php echo $post_count; ?> </h3>
             <?php }
-            } ?>
+             ?>
 
             <div class="row">
-              <?php $name = $category = $minexp = $salary = $industry = $desc = $role = $eType = $status = "";
+            <?php
+              $name = $category = $minexp = $compensation = $industry = $desc = $role = $eType = $status = "";
 
               include 'connect.php';
+
               $sql = "select *,(select name from employer where id=post.eid)as ename from post  order by date";
+
               if (isset($_GET['q'])) {
-                $sql = "select *,(select name from employer where id=post.eid)as ename from post where name LIKE '%" . $_GET['q'] . "%' order by date";
-              }
-              if (isset($_GET['industry'])) {
-                $sql = "select *,(select name from employer where id=post.eid)as ename from post where industry='" . $_GET['industry'] . "' order by date";
-              }
-              if (isset($_GET['category'])) {
-                $sql = "select *,(select name from employer where id=post.eid)as ename from post where category='" . $_GET['category'] . "' order by date";
+                  $sql = "select *,(select name from employer where id=post.eid)as ename from post where name LIKE '%" . $_GET['q'] . "%' order by date";
               }
 
+              if (isset($_GET['industry'])) {
+                  $sql = "select *,(select name from employer where id=post.eid)as ename from post where industry='" . $_GET['industry'] . "' order by date";
+              }
+
+              if (isset($_GET['category'])) {
+                  $sql = "select *,(select name from employer where id=post.eid)as ename from post where category='" . $_GET['category'] . "' order by date";
+              }
+
+              if (isset($_GET['constituency'])) {
+                $sql = "select *,(select name from employer where id=post.eid)as ename from post where constituency='" . $_GET['constituency'] . "' order by date";
+              }
+
+            
               $result = $conn->query($sql);
+
               if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                  $pid = $row['id'];
-                  $jobtitle = $row['name'];
-                  $category = $row['category'];
-                  $minexp = $row['minexp'];
-                  $salary = $row['salary'];
-                  $industry = $row['industry'];
-                  $desc = $row['desc'];
-                  $role = $row['role'];
-                  $ename = $row['ename'];
-                  $status = $row['status'];
+                  while ($row = $result->fetch_assoc()) {
+                      $pid = $row['id'];
+                      $jobtitle = $row['name'];
+                      $category = $row['category'];
+                      $minexp = $row['minexp'];
+                      $compensationSerialized = $row['compensation'];
+                      $compensationArray = unserialize($compensationSerialized);
+                      $industry = $row['industry'];
+                      $desc = $row['desc'];
+                      $role = $row['role'];
+                      $ename = $row['ename'];
+                      $status = $row['status'];
+                      $county = $row['county_name'];
+                      $constituency = $row['constituency'];
               ?>
 
+                      <div class="col-md-12 crd" style="margin: 10px; background-color:#257059; padding: 10px;">
 
-                  <div class="col-md-12 crd" style="margin: 10px; background-color:#257059; padding: 10px;">
+                          <h3 style="color: #e9c46a"> <b> <?php echo $jobtitle; ?> <br> </h3>
+                          <!-- ------------------------------------------------------------------ -->
+                          <h5 style="color:#99D98C">By <?php echo $ename; ?> </h5> <br>
+                          <!-- ------------------------------------------------------------------ -->
+                          <h5> <b style="color:#F8D4A7">Attachment Description</b> <br> </h5>
+                          <h5><?php echo $desc; ?></h5>
+                          <!-- ------------------------------------------------------------------ -->
+                          <h5><b style="color:#F8D4A7">Compensation</b></h5>
+                          <ul>
+                              <?php foreach ($compensationArray as $option) { ?>
+                                  <li><?php echo $option; ?></li>
+                              <?php } ?>
+                          </ul>
+                          <!-- ------------------------------------------------------------------ -->
+                          <h5><b style="color:#F8D4A7">Location</b></h5>
+                          <h5><?php echo $county; ?>  <?php echo $constituency; ?></h5>
+                          <!-- ------------------------------------------------------------------ -->
+                          <a href="applyJob.php?id=<?php echo $pid; ?>" class="pull-right" style="font-family: 'Sora', sans-serif; color:#e9c46a;">
+                              <h3><strong>Apply</strong></h3>
+                          </a>
+                      </div>
 
-                    <h3 style="color: #e9c46a"> <b> <?php echo $jobtitle; ?> <br> </h3>
-                    <!-- ------------------------------------------------------------------ -->
-                    <h5 style="color:#99D98C">By <?php echo $ename; ?> </h5> <br>
-                    <!-- ------------------------------------------------------------------ -->
-                    <h5> <b style="color:#F8D4A7">Job Description:</b> <br> </h5>
-                    <h5><?php echo $desc; ?></h5>
-                    <!-- ------------------------------------------------------------------ -->
-                    <h5><b style="color:#F8D4A7">Salary:</b>
-                      <?php echo $salary; ?> </h5>
-                    <!-- ------------------------------------------------------------------ -->
-                    <a href="applyJob.php?id=<?php echo $pid; ?>" class="pull-right" style="font-family: 'Sora', sans-serif; color:#e9c46a;">
-                      <h3><strong>Apply</strong></h3>
-                    </a>
-                  </div>
-
-                  <!--      ------------------------------------------------------------------------------------->
-                  <!--     Error message  -->
-
-              <?php }
+              <?php
+                  }
               } else {
-                echo '<div class="" style="justify-content:center;">';
-                echo ' <img src="img/err.svg" width=600px /> ';
-                echo '</div>';
-              } ?>
+                  echo '<div class="" style="justify-content:center;">';
+                  echo ' <img src="img/err.svg" width=600px /> ';
+                  echo '</div>';
+              }
+              ?>
+
 
             </div>
           </div>

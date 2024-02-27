@@ -8,14 +8,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $password = $_POST["password"];
-    $qlf = $_POST["qlf"];
+    $uni = $_POST["uni"];
     $dob = $_POST["dob"];
-    $skills = $_POST["skills"];
+    $course = $_POST["course"];
+    $county = $_POST["county"];
+    $constituency = $_POST["constituency"];
 
 
 
-    $sql = "INSERT INTO seeker (name,email,password,qualification,dob,skills,resume)
-VALUES ('$name', '$email', '$password','$qlf', '$dob', '$skills','$fileName')";
+    $sql = "INSERT INTO seeker (name,email,password,university,dob,course,resume,county,constituency)
+VALUES ('$name', '$email', '$password','$uni', '$dob', '$course','$fileName', '$county', '$constituency')";
 
     if ($conn->query($sql) === TRUE) {
 ?>

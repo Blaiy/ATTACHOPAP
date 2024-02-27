@@ -5,7 +5,8 @@
 
 include 'authorizeEmployer.php';
 $id = 0;
-$name = $category = $minexp = $salary = $industry = $desc = $role = $eType = $status = $msg = "";
+$name = $category = $location = $compensation = $industry = $desc = $role = $eType = $status = $msg = "";
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET') {
     include 'connect.php';
@@ -16,12 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
         if ($row = $result->fetch_assoc()) {
             $name = $row['name'];
             $category = $row['category'];
-            $minexp = $row['minexp'];
-            $salary = $row['salary'];
+            $location = $row['location'];
+            $compensation = $row['compensation'];
             $industry = $row['industry'];
             $desc = $row['desc'];
             $role = $row['role'];
-            $eType = $row['eType'];
             $status = $row['status'];
         }
     }
@@ -31,29 +31,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
         $id = $_POST['id'];
         $name = $_POST['name'];
         $category = $_POST['category'];
-        $minexp = $_POST['minexp'];
-        $salary = $_POST['salary'];
+        $location = $_POST['location'];
+        $compensation = $_POST['compensation'];
         $industry = $_POST['industry'];
         $desc = $_POST['desc'];
         $role = $_POST['role'];
-        $eType = $_POST['eType'];
         $status = $_POST['status'];
+        $county = $_POST['county'];
+        $constituency = $_POST['constituency'];
+
 
         if ($id > 0) {
             $sql = "Update `post` set `date`=CURRENT_DATE(),"
                 . "`name`='$name', "
                 . "`category`='$category', "
-                . "`minexp`='$minexp', "
+                . "`location`='$location', "
                 . "`desc`='$desc', "
-                . "`salary`='$salary', "
+                . "`compensation`='".serialize($compensation)."', "
                 . "`industry`='$industry', "
                 . "`role`='$role', "
-                . "`employmentType`='$eType', "
                 . "`status`= '$status' "
+                . "`county`='$county', "
+                . "`constituency`='$constituency' "
                 . "where id=$id and eid=$eid;";
         } else {
-            $sql = "INSERT INTO `post` (`id`, `date`, `eid`, `name`, `category`, `minexp`, `desc`, `salary`, `industry`, `role`, `employmentType`, `status`) "
-                . "VALUES (NULL, CURRENT_DATE(), '$eid', '$name', '$category', '$minexp', '$desc', '$salary', '$industry', '$role', '$eType', '$status');";
+            $sql = "INSERT INTO `post` (`id`, `date`, `eid`, `name`, `category`, `location`, `desc`, `compensation`, `industry`, `role`, `status`, `county`, `constituency`) "
+                . "VALUES (NULL, CURRENT_DATE(), '$eid', '$name', '$category', '$location', '$desc', '".serialize($compensation)."', '$industry', '$role', '$status', '$county', '$constituency');";
         }
 
         if ($conn->query($sql) === TRUE) {
@@ -67,6 +70,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
         }
     }
 }
+$stmt = $conn->prepare("SELECT * FROM regions GROUP BY county_id ORDER BY county_name");
+$stmt->execute();
+$result = $stmt->get_result();
+$counties = $result->fetch_all(MYSQLI_ASSOC);
+
+$selectedCounty = isset($_POST['county']) ? $_POST['county'] : (isset($_GET['county']) ? $_GET['county'] : null);
+
+$stmt = $conn->prepare("SELECT * FROM regions WHERE county_name = ?");
+$stmt->bind_param("s", $selectedCounty);
+$stmt->execute();
+$result = $stmt->get_result();
+$constituencies = $result->fetch_all(MYSQLI_ASSOC);
+
 ?>
 
 
@@ -158,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
 
         <div class="hero">
 
-            <h3 class="pc" style="padding-top: 120px; font-size: 90px; text-align: center;"><b>POST A JOB</b></h3>
+            <h3 class="pc" style="padding-top: 120px; font-size: 90px; text-align: center;"><b>POST AN OPPORTUNITY</b></h3>
 
             <div class="container contact-form" style=" background-color: #2a9d8f; width: 700px; height: 1100px; box-shadow: 0px 0px 25px #1e1e1e; 
                  align-items: center; justify-content: center; display: flex; padding: 0px; ">
@@ -172,35 +188,101 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                             <input type='hidden' value="<?php echo $id; ?>" name='id' />
 
                             <div class="form-group">
-                                <label for="name">Job Title:</label>
-                                <input type="text" name="name" class="form-control" style="border-radius:0px; height: 50px;" placeholder="Enter Job Title" value="<?php echo $name; ?>" />
+                                <label for="name">Attachment Opportunity</label>
+                                <input type="text" name="name" class="form-control" style="border-radius:0px; height: 50px;" placeholder="Enter Attachment Opportunity" value="<?php echo $name; ?>" />
                             </div>
 
                             <div class="form-group">
-                                <label for="category">Job Category</label>
+                                <label for="category">Attachment Category</label>
                                 <select type="text" name="category" class="form-control" style="border-radius:0px; height: 50px;" placeholder="Category"> <?php include 'categoryOptions.php'; ?>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="minexp">Minimum Experiance</label>
-                                <input type="text" name="minexp" class="form-control" style="border-radius:0px; height: 50px;" placeholder="Enter Minimum Expireince" value="<?php echo $minexp; ?>" />
+                                <label for="location">Attachment Location</label>
+                                <input type="text" name="location" class="form-control" style="border-radius:0px; height: 50px;" placeholder="Enter Location" value="<?php echo $location; ?>" />
                             </div>
 
                             <div class="form-group">
-                                <label for="salary">Salary Budget</label>
-                                <input type="text" name="salary" class="form-control" style="border-radius:0px; height: 50px;" placeholder="Enter Salary" value="<?php echo $salary; ?>" />
+                                <label for="county">County:</label>
+                                <select id="county" name="county" class="form-control" onchange="fetchConstituencies()">
+                                    <option value="">Select County</option>
+                                    <?php foreach ($counties as $county): ?>
+                                        <option value="<?= $county['county_id'] ?>"><?= $county['county_name'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="industry">Job industry</label>
+                                <label for="constituency">Constituency:</label>
+                                <select id="constituency" name="constituency" class="form-control">
+                                    <option value="">Select Constituency</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="compensation">Compensation (Select all that apply)</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="compensation[]" id="compensationUnpaid" value="Unpaid">
+                                    <label class="form-check-label" for="compensationUnpaid">
+                                    Unpaid (Focuses on Skill Development and Experience)
+                                    
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="compensation[]" id="compensationStipend" value="Stipend">
+                                    <label class="form-check-label" for="compensationStipend">
+                                    Stipend (To cover some basic expenses)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="compensation[]" id="compensationTransport" value="Transport">
+                                    <label class="form-check-label" for="compensationTransport">
+                                    Transportation Allowance (To cover commuting costs)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="compensation[]" id="compensationMeal" value="Meal">
+                                    <label class="form-check-label" for="compensationMeal">
+                                    Meal Allowance (To cover meal expenses)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="compensation[]" id="compensationSkill" value="Skill">
+                                    <label class="form-check-label" for="compensationSkill">
+                                    Skill Development (Gain valuable practical experience)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="compensation[]" id="compensationCertificate" value="Certificate">
+                                    <label class="form-check-label" for="compensationCertificate">
+                                    Certificate of Completion (Upon successful program completion)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="compensation[]" id="compensationNetworking" value="Networking">
+                                    <label class="form-check-label" for="compensationNetworking">
+                                    Networking Opportunities (Connect with professionals in the field)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="compensation[]" id="compensationJobOffer" value="JobOffer">
+                                    <label class="form-check-label" for="compensationJobOffer">
+                                    Potential Job Offer (Upon successful program completion)
+                                    </label>
+                                </div>
+                                <small class="text-muted">**Please note:** We prioritize fair compensation practices and are working towards offering competitive salaries for attachment programs in the future. Currently, the program is unpaid, but we offer the options above to enhance your experience. We encourage you to reach out with any questions or concerns.</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="industry">Industry</label>
                                 <select type="text" name="industry" class="form-control" style="border-radius:0px; height: 50px;" placeholder="Industry"> <?php include 'industryOptions.php'; ?>
                                 </select>
                             </div>
 
 
                             <div class="form-group">
-                                <label for="desc">Job requirements</label>
+                                <label for="desc">Attachment requirements</label>
                                 <input type="text" name="desc" class="form-control" style="border-radius:0px; height: 50px;" placeholder="Description" value="<?php echo $desc; ?>" />
                             </div>
 
@@ -209,13 +291,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                                 <input type="text" name="role" class="form-control" style="border-radius:0px; height: 50px;" placeholder="Enter Role" value="<?php echo $role; ?>" />
                             </div>
 
-                            <div class="form-group">
-                                <label for="eType">Employment Type</label>
-                                <select type="text" name="eType" class="form-control" style="border-radius:0px; height: 50px;">
-                                    <option>Permanent</option>
-                                    <option>Part-Time</option>
-                                </select>
-                            </div>
 
                             <div class="form-group">
                                 <label for="eType">Status</label>
@@ -244,24 +319,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                         </div>
                     </div>
                 </form>
+                </div>
             </div>
-
-
-
-
-
-
         </div>
 
+        <script>
+            function fetchConstituencies() {
+            var countyId = document.getElementById('county').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'get_constituencies.php?county_id=' + countyId, true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var constituencies = JSON.parse(xhr.responseText);
+                    var constituencyDropdown = document.getElementById('constituency');
+                    constituencyDropdown.innerHTML = '<option value="">Select Constituency</option>';
+                    constituencies.forEach(function (constituency) {
+                        var option = document.createElement('option');
+                        option.value = constituency['constituency_name'];
+                        option.textContent = constituency['constituency_name'];
+                        constituencyDropdown.appendChild(option);
+                    });
+                } else {
+                    console.log('Request failed.  Returned status of ' + xhr.status);
+                }
+            };
+            xhr.send();
+        }
 
-
-    </div>
-
-
+        </script>
 
 
     <!--first row -->
-
     <script src="js/tilt.jquery.min.js"></script>
     <script src="js/signinModal.js"></script>
 </body>

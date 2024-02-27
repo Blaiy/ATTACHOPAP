@@ -1,7 +1,7 @@
 <?php
 
 ?>
-<option>- All Job Postings -</option>
+<option>- All Attachment Postings -</option>
 <option>Accounting Jobs</option>
 <option>Interior Design Jobs</option>
 <option>Bank Jobs</option>
