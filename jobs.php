@@ -1,3 +1,20 @@
+<?php
+include 'connect.php';
+
+if (isset($_SESSION['sid'])) {
+    $sid = $_SESSION['sid'];
+    $checkStatusSql = "SELECT status FROM seeker WHERE id='$sid'";
+    $statusResult = $conn->query($checkStatusSql);
+    if ($statusResult->num_rows > 0) {
+        $statusRow = $statusResult->fetch_assoc();
+        $status = $statusRow['status'];
+        if ($status != 'Accepted') {
+            echo '<div class="alert alert-danger" role="alert">You must be verified to apply for jobs. Please wait for verification.</div>';
+        }
+    }
+}
+
+?>
 <!doctype html>
 
 

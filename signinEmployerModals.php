@@ -193,6 +193,14 @@ $constituencies = $result->fetch_all(MYSQLI_ASSOC);
               <?php include "courseOptions.php"; ?>
             </select>
 					</p>
+          <p class="fieldset" style="padding-right: 30px;">
+						<label class="image-replace cd-username" for="empsignup-username">School ID</label>
+              <input class="full-width has-padding has-border" id="school_id" name="school_id" type="file" placeholder="Upload School ID" accept=".pdf, .jpg, .jpeg, .png">
+					</p>
+          <p class="fieldset" style="padding-right: 30px;">
+						<label class="image-replace cd-username" for="empsignup-username">Attachment Letter</label>
+              <input class="full-width has-padding has-border" id="attachment_letter" name="attachment_letter" type="file" placeholder="Upload Attachment Letter" accept=".pdf, .doc, .docx">
+					</p>
                                         
                                        
 					<p class="form-group">

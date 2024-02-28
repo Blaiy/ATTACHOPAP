@@ -13,11 +13,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $course = $_POST["course"];
     $county = $_POST["county"];
     $constituency = $_POST["constituency"];
+    $targetDir = "uploads/";
+    $letterDir = "letter/";
+    $schoolIDDir = "schoolID/";
+    $attachmentLetter = $_FILES["attachment_letter"]["name"];
+    $schoolID = $_FILES["school_id"]["name"];
+    $attachmentLetterPath = $targetDir . $letterDir . basename($attachmentLetter);
+    $schoolIDPath = $targetDir . $schoolIDDir . basename($schoolID);
+    
+    // Move uploaded files to the uploads directory
+    move_uploaded_file($_FILES["attachment_letter"]["tmp_name"], $attachmentLetterPath);
+    move_uploaded_file($_FILES["school_id"]["tmp_name"], $schoolIDPath);
 
+    $sql = "INSERT INTO seeker (name, email, password, university, dob, course, attachment_letter, school_id, county, constituency)
+            VALUES ('$name', '$email', '$password', '$uni', '$dob', '$course', '$attachmentLetterPath', '$schoolIDPath', '$county', '$constituency')";
 
-
-    $sql = "INSERT INTO seeker (name,email,password,university,dob,course,resume,county,constituency)
-VALUES ('$name', '$email', '$password','$uni', '$dob', '$course','$fileName', '$county', '$constituency')";
 
     if ($conn->query($sql) === TRUE) {
 ?>
