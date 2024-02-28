@@ -128,15 +128,17 @@
                             <th>Applicant's Name</th>
                             <th>Date Applied</th>
                             <th>Job Title</th>
-                            <th>Applicant's Skills</th>
+                            <th>Applicant's Course</th>
                             <th>Application Status</th>
+                            <th>Accept</th>
+                            <th>Reject</th>
                         </thead>
                         <tbody>
 
                             <?php
                             $sql = "select id,sid,pid,(select name from seeker where id=j.sid)as sname,date,"
                                 . "(select name from post where id=j.pid)as title,"
-                                . "(select skills from seeker where id=j.sid)as skills,"
+                                . "(select course from seeker where id=j.sid)as course,"
                                 . "status from jobsapplied j where pid in (select id from post where eid=$eid);";
 
                             $appresult = $conn->query($sql);
@@ -148,7 +150,7 @@
                                     $sname = $row['sname'];
                                     $title = $row['title'];
                                     $date = $row['date'];
-                                    $skills = $row['skills'];
+                                    $course = $row['course'];
                                     $status = $row['status'];
                                     $resume = $row['resume'];
 
@@ -158,10 +160,10 @@
                                         <td><?php echo $sname; ?></td>
                                         <td><?php echo $date; ?></td>
                                         <td><?php echo $title; ?></td>
-                                        <td><?php echo $skills; ?></td>
+                                        <td><?php echo $course; ?></td>
                                         <td><?php echo $status; ?></td>
-
-
+                                        <td><a href="acceptApplication.php?id=<?php echo $id;?>"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                        <td><a href="rejectApplication.php?id=<?php echo $id;?>"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
                                     </tr>
                             <?php
                                 }

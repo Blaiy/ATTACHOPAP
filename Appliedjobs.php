@@ -126,18 +126,18 @@
                         <thead>
                             <th>Post Id</th>
                             <th>Company Name</th>
-                            <th>Job Title</th>
+                            <th>Title</th>
                             <th>Date Applied</th>
-                            <th>Min Experiance</th>
-                            <th>Salary</th>
-                            <th>Job Description</th>
+                            <th>Location</th>
+                            <th>Category</th>
+                            <th>Description</th>
                             <th>Status</th>
 
                         </thead>
                         <tbody>
 
                             <?php
-                            $sql = "select id,(select name from employer where id=post.eid)as ename,name,minexp,salary,`desc`,(select date from jobsapplied where pid=post.id and sid=$sid)as date,(select status from jobsapplied where pid=post.id and sid=$sid)as appstatus  from post where id in (select pid from jobsapplied where sid=$sid);";
+                            $sql = "select id,(select name from employer where id=post.eid)as ename,name,constituency,category,`desc`,(select date from jobsapplied where pid=post.id and sid=$sid)as date,(select status from jobsapplied where pid=post.id and sid=$sid)as appstatus  from post where id in (select pid from jobsapplied where sid=$sid);";
                             $appresult = $conn->query($sql);
                             if ($appresult->num_rows > 0) {
                                 // output data of each row
@@ -146,8 +146,8 @@
                                     $id = $row['id'];
                                     $title = $row['name'];
                                     $date = $row['date'];
-                                    $minexp = $row['minexp'];
-                                    $salary = $row['salary'];
+                                    $constituency = $row['constituency'];
+                                    $category = $row['category'];
                                     $desc = $row['desc'];
                                     $status = $row['appstatus'];
 
@@ -157,8 +157,8 @@
                                         <td><?php echo $ename; ?></td>
                                         <td><?php echo $title; ?></td>
                                         <td><?php echo $date; ?></td>
-                                        <td><?php echo $minexp; ?></td>
-                                        <td><?php echo $salary; ?></td>
+                                        <td><?php echo $constituency; ?></td>
+                                        <td><?php echo $category; ?></td>
                                         <td><?php echo $desc; ?></td>
                                         <td><?php echo $status; ?></td>
 

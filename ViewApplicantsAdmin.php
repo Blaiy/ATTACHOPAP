@@ -103,53 +103,60 @@ if ($result->num_rows > 0) {
 	</div>
 		
                     <div style=" height: 100vh; padding-top: 0px; " class="col-md-12">
-                        <div><h3 style=" padding-bottom: 30px;">Applications Received:</h3></div>
+                        <div><h3 style=" padding-bottom: 30px;">Applications Received</h3></div>
                         <table class="table table-hover table-responsive table-striped" id='jobappliedTable'>
                             <thead>
-                            <th>Post Id</th>
-                            <th>Applicant's Name</th>
+                            <th>Student ID</th>
+                            <th>Student's Name</th>
                             <th>Date Applied</th>
-                            <th>Job Title</th>
-                            <th>Applicant's Skills</th>
+                            <th>Applicant's University</th>
+                            <th>Applicant's course</th>
                             <th>Application Status</th>
+                            <th>Attachment Letter</th>
+                            <th>School ID</th>
                             <th>Accept</th>
                             <th>Reject</th>
                             </thead>
                             <tbody>
+
+
                                 
                              <?php 
                              //$sql="select id,sid,pid,(select name from seeker where id=j.sid)as sname,date,"
                              //        . "(select name from post where id=j.pid)as title,"
-                             //        . "(select skills from seeker where id=j.sid)as skills,"
+                             //        . "(select course from seeker where id=j.sid)as course,"
                              //        . "status from jobsapplied j where pid in (select id from post where eid=$eid);"; 
-                             $sql="select id,sid,pid,(select name from seeker where id=j.sid)as sname,date,"
-                                     . "(select name from post where id=j.pid)as title,"
-                                     . "(select skills from seeker where id=j.sid)as skills,"
-                                     . "status from jobsapplied j where pid";
+                             //$sql="select id,sid,pid,(select name from seeker where id=j.sid)as sname,date,"
+                                     //. "(select name from post where id=j.pid)as title,"
+                                     //. "(select course from seeker where id=j.sid)as course,"
+                                     //. "status from jobsapplied j where pid";
+                            $sql = "select id, name, university, course, status, attachment_letter, school_id, dob from seeker";
                              $appresult = $conn->query($sql);
                         if ($appresult->num_rows > 0) {
                             // output data of each row
                              while($row = $appresult->fetch_assoc()) 
                                  {
-                                 $id=$row['id'];  //application id
-                                $pid=$row['pid'];
-                                $sname = $row['sname'];
-                                $title=$row['title'];
-                                $date=$row['date'];
-                                $skills=$row['skills'];
+                                $id = $row['id'];
+                                $name = $row['name'];
+                                $university=$row['university'];
+                                $dob=$row['dob'];
+                                $course=$row['course'];
                                 $status=$row['status'];
-                                $resume=$row['resume'];
+                                $attachment_letter=$row['attachment_letter'];
+                                $school_id=$row['school_id'];
 
                                 ?>
                                 <tr>
-                                    <td><?php echo $pid;?></td>
-                                    <td><?php echo $sname;?></td>
-                                    <td><?php echo $date;?></td>
-                                    <td><?php echo $title;?></td>
-                                    <td><?php echo $skills;?></td>
+                                    <td><?php echo $id;?></td>
+                                    <td><?php echo $name;?></td>
+                                    <td><?php echo $dob;?></td>
+                                    <td><?php echo $university;?></td>
+                                    <td><?php echo $course;?></td>
                                     <td><?php echo $status;?></td>
-                                    <td><a href="acceptApplication.php?id=<?php echo $id;?>"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                    <td><a href="rejectApplication.php?id=<?php echo $id;?>"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
+                                    <td><a href="<?php echo $attachment_letter; ?>" target="_blank">View/Download</a></td>
+                                    <td><a href="<?php echo $school_id; ?>" target="_blank">View/Download</a></td>
+                                    <td><a href="acceptRegistration.php?id=<?php echo $id;?>"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                    <td><a href="rejectRegistration.php?id=<?php echo $id;?>"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
                                     
                                     
                                 </tr>

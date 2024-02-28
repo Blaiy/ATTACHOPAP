@@ -123,8 +123,8 @@
                             <th>Post Id</th>
                             <th>Title</th>
                             <th>Description</th>
-                            <th>Min Experience</th>
-                            <th>Salary</th>
+                            <th>Compensation</th>
+                            <th>Location</th>
                             <th>Status</th>
                             <th>Update</th>
                             <th>Delete</th>
@@ -140,12 +140,12 @@
                                     $id = $row['id'];
                                     $title = $row['name'];
                                     $category = $row['category'];
-                                    $minexp = $row['minexp'];
-                                    $salary = $row['salary'];
+                                    $compensationSerialized = $row['compensation'];
+                                    $compensationArray = unserialize($compensationSerialized);
+                                    $constituency = $row['constituency'];
                                     $industry = $row['industry'];
                                     $desc = $row['desc'];
                                     $role = $row['role'];
-
                                     $status = $row['status'];
 
                             ?>
@@ -153,8 +153,14 @@
                                         <td><?php echo $id; ?></td>
                                         <td><?php echo $title; ?></td>
                                         <td><?php echo $desc; ?></td>
-                                        <td><?php echo $minexp; ?></td>
-                                        <td><?php echo $salary; ?></td>
+                                        <td>
+                                            <ul>
+                                                <?php foreach ($compensationArray as $option) { ?>
+                                                    <li><?php echo $option; ?></li>
+                                                <?php } ?>
+                                            </ul>
+                                        </td>
+                                        <td><?php echo $constituency; ?></td>
                                         <td><?php echo $status; ?></td>
                                         <td>
                                             <a href="postjob.php?update=true&id=<?php echo $id; ?>"> <span class="glyphicon glyphicon-pencil"></span></a>
