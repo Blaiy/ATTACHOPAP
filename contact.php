@@ -123,7 +123,7 @@
                                     <div class="bg-white border rounded d-flex flex-shrink-0 align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
                                         <i class="fa fa-map-marker-alt text-primary"></i>
                                     </div>
-                                    <span>3, Chowbaga Road, Kolkata</span>
+                                    <span>P.O PRIVATE BAG 20157, KABARAK, NAKURU - KENYA</span>
                                 </div>
                             </div>
                             <div class="col-md-4 wow fadeIn" data-wow-delay="0.3s">
@@ -131,7 +131,7 @@
                                     <div class="bg-white border rounded d-flex flex-shrink-0 align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
                                         <i class="fa fa-envelope-open text-primary"></i>
                                     </div>
-                                    <span>attachopap.com</span>
+                                    <span>attachopap@gmail.com</span>
                                 </div>
                             </div>
                             <div class="col-md-4 wow fadeIn" data-wow-delay="0.5s">
@@ -139,13 +139,16 @@
                                     <div class="bg-white border rounded d-flex flex-shrink-0 align-items-center justify-content-center me-3" style="width: 45px; height: 45px;">
                                         <i class="fa fa-phone-alt text-primary"></i>
                                     </div>
-                                    <span>+123 456 7890</span>
+                                    <span>+254798654321</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <iframe class="position-relative rounded w-100 h-100" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14742.611868332267!2d88.4187955!3d22.5172!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0273f58b9feec5%3A0x30f8067b73c45d8!2sHeritage%20Institute%20of%20Technology!5e0!3m2!1sen!2sin!4v1681857749891!5m2!1sen!2sin" frameborder="0" style="min-height: 400px; border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    <iframe class="position-relative rounded w-100 h-100" 
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15858.204188269767!2d35.96506310837449!3d-0.16707983906134602!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0!2sKabarak%20University!5e0!3m2!1sen!2sin!4v1681857749891!5m2!1sen!2sin" 
+                            frameborder="0" style="min-height: 400px; border:0;" allowfullscreen="" aria-hidden="false" tabindex="0">
+                    </iframe>
                     </div>
                     <div id="frmContact" class="col-md-6">
                         <div id="mail-status"></div>

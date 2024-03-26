@@ -17,12 +17,23 @@ $constituencies = $result->fetch_all(MYSQLI_ASSOC);
 
 <style>
 
-.sgn {
-  color: white;
-  text-align:right;
-  padding-right:30px;
-  cursor: context-menu;
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.sgn,
+.sgn-left {
+    color: white;
+    cursor: pointer;
+}
+
+.sgn-left {
+    text-align: right;
+    padding-right: 30px;
+}
+
 
 .lk {
   color: #e9c46a;
@@ -78,10 +89,15 @@ $constituencies = $result->fetch_all(MYSQLI_ASSOC);
                         <input id="loginsubmit" class="full-width" type="submit" name="loginsubmit" id="login" value="Login">
                 </p>
 	      </form>
+              <div class="flex-container">
+                <p class="cd-form-bottom-message">
+                  <p id="regNowBtn"  class="sgn-left" data-toggle="modal" data-target="#empsignup">Forgot Password? <a class="lk">Click Here</a> </p>
+                </p>
 		
                 <p class="cd-form-bottom-message">
                   <p id="regNowBtn"  class="sgn" data-toggle="modal" data-target="#empsignup"> Don't have an account? <a class="lk">Register Now!</a> </p>
-                </p>                
+                </p>     
+              </div>           
 	    </div>
           </div>
           <div class="modal-footer"></div>           
@@ -118,13 +134,24 @@ $constituencies = $result->fetch_all(MYSQLI_ASSOC);
                 <h3 style="color: white; padding-left: 30px;">Register as Employer</h3>
             <form class="cd-form" method="post" action="registerEmployer.php" enctype="multipart/form-data">
           <p class="fieldset" style="padding-right: 30px;">
-						<label class="image-replace cd-username" for="empsignup-username">Username</label>
-            <input class="full-width has-padding has-border" id="name" name="name" type="text" placeholder="Enter Username">
+						<label class="image-replace cd-username" for="empsignup-username">Company's/Organization's Name</label>
+            <input class="full-width has-padding has-border" id="name" name="name" type="text" placeholder="Enter Company's/Organization's Name">
 					</p>
 
 					<p class="fieldset" style="padding-right: 30px;">
 						<label class="image-replace cd-email" for="empsignup-email">E-mail</label>
             <input class="full-width has-padding has-border" id="email" name="email" type="email" placeholder="Enter E-mail">
+					</p>
+
+          <p class="fieldset" style="padding-right: 30px;">
+						<label class="image-replace cd-username" for="empsignup-username">Business Registration Documents</label>
+            <label for="businessReg" style="display: block; margin-bottom: 10px; font-size:15px;">Business Registration Documents</label>
+              <input class="full-width has-padding has-border" id="businessReg" name="businessReg" type="file" placeholder="Upload Tax Identification Number or Business Registration Certificate" accept=".pdf, .jpg, .jpeg, .png">
+					</p>
+          <p class="fieldset" style="padding-right: 30px;">
+						<label class="image-replace cd-username" for="empsignup-username">Business Licenses and Permits</label>
+            <label for="business_license" style="display: block; margin-bottom: 10px; font-size:15px;">Business Licenses and Permits</label>
+              <input class="full-width has-padding has-border" id="business_license" name="business_license" type="file" placeholder="Upload Industry Specific Licenses or County Business Permits" accept=".pdf, .doc, .docx">
 					</p>
 
 					<p class="fieldset" style="padding-right: 30px;">
@@ -195,10 +222,12 @@ $constituencies = $result->fetch_all(MYSQLI_ASSOC);
 					</p>
           <p class="fieldset" style="padding-right: 30px;">
 						<label class="image-replace cd-username" for="empsignup-username">School ID</label>
+            <label for="" style="display: block; margin-bottom: 10px; font-size:15px;">Upload Your Valid School ID</label>
               <input class="full-width has-padding has-border" id="school_id" name="school_id" type="file" placeholder="Upload School ID" accept=".pdf, .jpg, .jpeg, .png">
 					</p>
           <p class="fieldset" style="padding-right: 30px;">
 						<label class="image-replace cd-username" for="empsignup-username">Attachment Letter</label>
+            <label for="" style="display: block; margin-bottom: 10px; font-size:15px;">Upload Attachment Letter</label>
               <input class="full-width has-padding has-border" id="attachment_letter" name="attachment_letter" type="file" placeholder="Upload Attachment Letter" accept=".pdf, .doc, .docx">
 					</p>
                                         

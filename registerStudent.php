@@ -21,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $attachmentLetterPath = $targetDir . $letterDir . basename($attachmentLetter);
     $schoolIDPath = $targetDir . $schoolIDDir . basename($schoolID);
     
-    // Move uploaded files to the uploads directory
     move_uploaded_file($_FILES["attachment_letter"]["tmp_name"], $attachmentLetterPath);
     move_uploaded_file($_FILES["school_id"]["tmp_name"], $schoolIDPath);
 

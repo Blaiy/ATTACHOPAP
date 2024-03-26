@@ -117,6 +117,7 @@ if (isset($_SESSION['sid'])) {
 
     /* ---------------------------------------------------------------------*/
     .crd {
+      position: relative;
       max-width: 100%;
       height: 100%;
       width: 100%;
@@ -129,6 +130,12 @@ if (isset($_SESSION['sid'])) {
     .crd:hover {
       transform: scale(1.05);
     }
+
+    .apply-button {
+    position: relative;    
+    bottom: 50px; 
+    right: 15px;  
+}
 
     /* -------------------------------------------------------------------------------------- */
   </style>
@@ -239,9 +246,11 @@ if (isset($_SESSION['sid'])) {
                           <h5><b style="color:#F8D4A7">Location</b></h5>
                           <h5><?php echo $county; ?>  <?php echo $constituency; ?></h5>
                           <!-- ------------------------------------------------------------------ -->
+                          <div class="apply-button">
                           <a href="applyJob.php?id=<?php echo $pid; ?>" class="pull-right" style="font-family: 'Sora', sans-serif; color:#e9c46a;">
                               <h3><strong>Apply</strong></h3>
                           </a>
+                          </div>
                       </div>
 
               <?php

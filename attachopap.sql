@@ -1,3 +1,12 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 26, 2024 at 11:45 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 8.1.2
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -37,6 +46,32 @@ INSERT INTO `admin` (`id`, `name`, `email`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cv_details`
+--
+
+CREATE TABLE `cv_details` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `about` text DEFAULT NULL,
+  `skills` text DEFAULT NULL,
+  `hobbies_interests` text DEFAULT NULL,
+  `projects` text DEFAULT NULL,
+  `aspirations` text DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `email` varchar(20) DEFAULT NULL,
+  `linkedin` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `cv_details`
+--
+
+INSERT INTO `cv_details` (`id`, `user_id`, `about`, `skills`, `hobbies_interests`, `projects`, `aspirations`, `phone_number`, `email`, `linkedin`) VALUES
+(1, 44, 'I\'m a very abled developer. With 20 years of experience in the industry. That being said I\'ve been in this game more that your God father.', 'Communication, Problem solving, Leadership', 'Photography, Travelling, Cooking', 'IDE, Open Source Master', 'To be better than the best.', '0757963318', 'odpsha@gmail.com', 'linkedin.com/in/shadrack-onyango-729b0a213');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `employer`
 --
 
@@ -44,25 +79,30 @@ CREATE TABLE `employer` (
   `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
-  `password` varchar(200) NOT NULL
+  `password` varchar(200) NOT NULL,
+  `business_license` varchar(255) DEFAULT NULL,
+  `businessReg` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `employer`
 --
 
-INSERT INTO `employer` (`id`, `name`, `email`, `password`) VALUES
-(4, 'Wipro Technologies ', 'admin@wipro.com', 'password'),
-(10, 'Mahindra', 'admin@mahindra.com', 'password'),
-(11, 'Tata Consultancy Services', 'admin@tcs.com', 'password'),
-(14, 'Infosys', 'admin@infosys.com', 'password'),
-(15, 'Paladion Networks', 'admin@paladion.com', 'password'),
-(16, 'Accenture', 'admin@accenture.com', 'password'),
-(26, 'Microsoft', 'admin@microsoft.com', 'password'),
-(27, 'Spark Foundation', 'admin@sf.com', 'password'),
-(28, 'Facebook', 'admin@facebook.com', 'password'),
-(29, 'Intel', 'admin@intel.com', 'password'),
-(30, 'LTI Mindtree', 'admin@lti.com', 'password');
+INSERT INTO `employer` (`id`, `name`, `email`, `password`, `business_license`, `businessReg`, `status`) VALUES
+(4, 'Wipro Technologies ', 'admin@wipro.com', 'password', NULL, NULL, NULL),
+(10, 'Mahindra', 'admin@mahindra.com', 'password', NULL, NULL, NULL),
+(11, 'Tata Consultancy Services', 'admin@tcs.com', 'password', NULL, NULL, NULL),
+(14, 'Infosys', 'admin@infosys.com', 'password', NULL, NULL, NULL),
+(15, 'Paladion Networks', 'admin@paladion.com', 'password', NULL, NULL, NULL),
+(16, 'Accenture', 'admin@accenture.com', 'password', NULL, NULL, NULL),
+(26, 'Microsoft', 'admin@microsoft.com', 'password', NULL, NULL, NULL),
+(27, 'Spark Foundation', 'admin@sf.com', 'password', NULL, NULL, NULL),
+(28, 'Facebook', 'admin@facebook.com', 'password', NULL, NULL, NULL),
+(29, 'Intel', 'admin@intel.com', 'password', NULL, NULL, NULL),
+(30, 'LTI Mindtree', 'admin@lti.com', 'password', NULL, NULL, NULL),
+(31, 'jhkjlk', 'odpsha@gmail.com', 'password', 'uploads/BusinessLicensesDocs/MUMIAS CENTRAL COMPREHENSIVE SCHOOL END.docx', 'uploads/BusinessRegistrationDocs/FEE STRUCTURE-CSMG24660921.pdf', NULL),
+(32, 'Shadrack Odipo', 'shadrackonyango30@gmail.com', 'password', 'uploads/BusinessLicensesDocs/MUMIAS CENTRAL COMPREHENSIVE SCHOOL END.docx', 'uploads/BusinessRegistrationDocs/MUMIAS CENTRAL COMPREHENSIVE SCHOOL EN1.pdf', 'Rejected');
 
 -- --------------------------------------------------------
 
@@ -535,32 +575,36 @@ CREATE TABLE `seeker` (
   `constituency` varchar(255) NOT NULL,
   `attachment_letter` varchar(255) DEFAULT NULL,
   `school_id` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL
+  `status` varchar(255) DEFAULT NULL,
+  `cv_status` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `seeker`
 --
 
-INSERT INTO `seeker` (`id`, `name`, `email`, `password`, `university`, `dob`, `course`, `resume`, `county`, `constituency`, `attachment_letter`, `school_id`, `status`) VALUES
-(36, 'Nishit Killa', 'nishit@gmail.com', 'password', 'BE', '2001-06-21', 'C++, JAVA', '', '', '', NULL, NULL, 'Accepted'),
-(37, 'Tushar Jain', 'tushar@gmail.com', 'password', 'BE', '2001-07-04', 'HTML, CSS, JS', '', '', '', NULL, NULL, NULL),
-(38, 'Sreeleena Ganguli', 'sreeleena@gmail.com', 'password', 'MTech', '2001-09-05', 'Backend Engg.', '', '', '', NULL, NULL, 'Rejected'),
-(39, 'Riteek Rakesh', 'riteek@gmail.com', 'password', 'BE', '2001-06-02', 'Circuit Design', '', '', '', NULL, NULL, NULL),
-(40, 'Sayantan Podder', 'sayantan@gmail.com', 'password', 'BE', '1995-07-19', 'Machine Learning', '', '', '', NULL, NULL, NULL),
-(41, 'Sampurna Ghosh', 'sampurna@gmail.com', 'password', 'B.Sc.', '1995-11-23', 'Physiotherapy', '', '', '', NULL, NULL, NULL),
-(42, 'Rahul Adhikary', 'rahul@gmail.com', 'password', 'BBA', '1991-08-12', 'International Business', '', '', '', NULL, NULL, NULL),
-(43, 'Mariam Meerza', 'mariam@gmail.com', 'password', 'BE', '1998-03-07', 'Computer Applications', '', '', '', NULL, NULL, NULL),
-(44, 'Shadrack', 'odpsha@gmail.com', '123456', 'Engineer', '2001-09-04', 'tech', '', '', '', NULL, NULL, 'Accepted'),
-(45, 'Shadrack', 'odpsha@gmail.com', 'password', 'Kabarak', '1996-12-20', 'CS', '', '', '', NULL, NULL, 'Rejected'),
-(46, 'odipo', 'shadrackonyango30@gmail.com', '123456', 'Kabarak University', '2024-02-16', 'Computer Science', '', '', '', NULL, NULL, NULL),
-(47, 'Paul Antony', 'paulotieno4@gmail.com', '123456', 'Alupe University', '2003-01-25', 'Logistics and Supply Chain Management', '', '', '', NULL, NULL, NULL),
-(48, 'Paul Otieno', 'paulotieno4@gmail.com', 'password', 'Maseno University', '2003-01-25', 'Psychology', '', '', '', NULL, NULL, NULL),
-(49, 'Shadrack', 'odpsha@gmail.com', '123456', 'Kisii University', '2024-02-07', 'Accounting', '', '', '', NULL, NULL, NULL),
-(50, 'Cynthia', 'cynthia@gmail.com', '123456', 'Kenyatta University', '1111-01-01', 'Graphic Design', '', '11', 'Isiolo North', NULL, NULL, NULL),
-(51, 'Gonzaga', 'odpsha@gmail.com', '123456', 'Multimedia University of Kenya', '2003-05-23', 'Computer Science', '', '37', 'Mumias West', 'uploads/', 'uploads/Lecture 2 Kabarak Undergraduate Project Paper Guidelines.pdf', NULL),
-(52, 'Gonzaga', 'odpsha@gmail.com', '123456', 'Maseno University', '2002-02-02', 'Information Communication Technology (ICT)', '', '43', 'Kabondo Kasipul', 'uploads/letter/', 'uploads/schoolID/hyundai-motor-group-PSn57PpKvnA-unsplash.jpg', NULL),
-(53, 'Gonzaga', 'odpsha@gmail.com', '123456', 'Dedan Kimathi University of Technology', '2005-05-05', 'Computer Science', '', '28', 'Keiyo South', 'uploads/letter/admission-letter.pdf', 'uploads/schoolID/Gene-ID.jpeg', 'Accepted');
+INSERT INTO `seeker` (`id`, `name`, `email`, `password`, `university`, `dob`, `course`, `resume`, `county`, `constituency`, `attachment_letter`, `school_id`, `status`, `cv_status`) VALUES
+(36, 'Nishit Killa', 'nishit@gmail.com', 'password', 'BE', '2001-06-21', 'C++, JAVA', '', '', '', NULL, NULL, 'Accepted', 0),
+(37, 'Tushar Jain', 'tushar@gmail.com', 'password', 'BE', '2001-07-04', 'HTML, CSS, JS', '', '', '', NULL, NULL, NULL, 0),
+(38, 'Sreeleena Ganguli', 'sreeleena@gmail.com', 'password', 'MTech', '2001-09-05', 'Backend Engg.', '', '', '', NULL, NULL, 'Rejected', 0),
+(39, 'Riteek Rakesh', 'riteek@gmail.com', 'password', 'BE', '2001-06-02', 'Circuit Design', '', '', '', NULL, NULL, NULL, 0),
+(40, 'Sayantan Podder', 'sayantan@gmail.com', 'password', 'BE', '1995-07-19', 'Machine Learning', '', '', '', NULL, NULL, NULL, 0),
+(41, 'Sampurna Ghosh', 'sampurna@gmail.com', 'password', 'B.Sc.', '1995-11-23', 'Physiotherapy', '', '', '', NULL, NULL, NULL, 0),
+(42, 'Rahul Adhikary', 'rahul@gmail.com', 'password', 'BBA', '1991-08-12', 'International Business', '', '', '', NULL, NULL, NULL, 0),
+(43, 'Mariam Meerza', 'mariam@gmail.com', 'password', 'BE', '1998-03-07', 'Computer Applications', '', '', '', NULL, NULL, NULL, 0),
+(44, 'Shadrack', 'odpsha@gmail.com', '123456', 'Engineer', '2001-09-04', 'tech', '', '', '', NULL, NULL, 'Accepted', 1),
+(45, 'Shadrack', 'odpsha@gmail.com', 'password', 'Kabarak', '1996-12-20', 'CS', '', '', '', NULL, NULL, 'Rejected', 0),
+(46, 'odipo', 'shadrackonyango30@gmail.com', '123456', 'Kabarak University', '2024-02-16', 'Computer Science', '', '', '', NULL, NULL, NULL, 0),
+(47, 'Paul Antony', 'paulotieno4@gmail.com', '123456', 'Alupe University', '2003-01-25', 'Logistics and Supply Chain Management', '', '', '', NULL, NULL, NULL, 0),
+(48, 'Paul Otieno', 'paulotieno4@gmail.com', 'password', 'Maseno University', '2003-01-25', 'Psychology', '', '', '', NULL, NULL, NULL, 0),
+(49, 'Shadrack', 'odpsha@gmail.com', '123456', 'Kisii University', '2024-02-07', 'Accounting', '', '', '', NULL, NULL, NULL, 0),
+(50, 'Cynthia', 'cynthia@gmail.com', '123456', 'Kenyatta University', '1111-01-01', 'Graphic Design', '', '11', 'Isiolo North', NULL, NULL, NULL, 0),
+(51, 'Gonzaga', 'odpsha@gmail.com', '123456', 'Multimedia University of Kenya', '2003-05-23', 'Computer Science', '', '37', 'Mumias West', 'uploads/', 'uploads/Lecture 2 Kabarak Undergraduate Project Paper Guidelines.pdf', NULL, 0),
+(52, 'Gonzaga', 'odpsha@gmail.com', '123456', 'Maseno University', '2002-02-02', 'Information Communication Technology (ICT)', '', '43', 'Kabondo Kasipul', 'uploads/letter/', 'uploads/schoolID/hyundai-motor-group-PSn57PpKvnA-unsplash.jpg', NULL, 0),
+(53, 'Gonzaga', 'odpsha@gmail.com', '123456', 'Dedan Kimathi University of Technology', '2005-05-05', 'Computer Science', '', '28', 'Keiyo South', 'uploads/letter/admission-letter.pdf', 'uploads/schoolID/Gene-ID.jpeg', 'Accepted', 0),
+(54, 'admin@accenture.com', 'annabelblessing02@gmail.com', 'password', 'Dedan Kimathi University of Technology', '2003-05-05', 'Computer Science', '', '40', 'Butula', 'uploads/letter/DATA SCIENCE AND AI CONFERENCE OFFICIAL OPENING.docx', 'uploads/schoolID/IMG-20231112-WA0032.jpg', NULL, 0),
+(55, 'accenture.com', 'annabelblessing02@gmail.com', 'password', 'Maseno University', '2003-05-05', 'Computer Science', '', '11', 'Isiolo North', 'uploads/letter/DATA SCIENCE AND AI CONFERENCE OFFICIAL OPENING.docx', 'uploads/schoolID/mylonfxQR.png', 'Accepted', 0),
+(56, 'admincom', 'resiatodoreen@gmail.com', 'password', 'Kibabii University', '2008-07-08', 'Computer Science', '', '22', 'Kiambaa', 'uploads/letter/GonzagaID.pdf', 'uploads/schoolID/1HZ75V_2023-09-21_13-07-03.png', 'Rejected', 0);
 
 -- --------------------------------------------------------
 
@@ -604,6 +648,12 @@ INSERT INTO `users` (`SeekersAndEmployers`) VALUES
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cv_details`
+--
+ALTER TABLE `cv_details`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -655,13 +705,19 @@ ALTER TABLE `seeker`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `cv_details`
+--
+ALTER TABLE `cv_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `employer`
 --
 ALTER TABLE `employer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `jobsapplied`
@@ -691,7 +747,7 @@ ALTER TABLE `regions`
 -- AUTO_INCREMENT for table `seeker`
 --
 ALTER TABLE `seeker`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

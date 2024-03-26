@@ -4,12 +4,14 @@
 
 body {
 	font-family: "Source Sans Pro", Arial, sans-serif;
-	background-color: #c7e1ff;
+	background-color: hsl(212, 100%, 89%);
 	font-size: 13px;
+  width:auto;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 body, html {
 	height: 100%
+  
 }
 .sidebar {position:absolute; right:0;}
 .dot {display:inline-block; width:10px; height:10px; background-color:rgba(255,255,255,1); border-radius:10px; z-index:999; content:''; color:transparent; font-size:14px; line-height:10px; vertical-align:middle; margin:5px 0 5px 0; font-weight:300;}

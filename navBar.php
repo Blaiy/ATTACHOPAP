@@ -65,7 +65,8 @@ session_start();
           echo ' <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">' . $myusername . '<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="adminAccount.php">My Account</a></li>
-              <li><a href="ViewApplicantsAdmin.php">View All Applications</a></li>
+              <li><a href="ViewApplicantsAdmin.php">View All Applications - Students</a></li>
+              <li><a href="ViewEmployersAdmin.php">View All Applications - Employers</a></li>
             <li><a href="logout.php">Logout</a></li>
        
           </ul>

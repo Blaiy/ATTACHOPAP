@@ -132,14 +132,12 @@ if ($result->num_rows > 0) {
                         <div><h3 style=" padding-bottom: 30px;">Applications Received</h3></div>
                         <table class="table table-hover table-responsive table-striped" id='jobappliedTable'>
                             <thead>
-                            <th>Student ID</th>
-                            <th>Student's Name</th>
-                            <th>Date Applied</th>
-                            <th>Applicant's University</th>
-                            <th>Applicant's course</th>
-                            <th>Application Status</th>
-                            <th>Attachment Letter</th>
-                            <th>School ID</th>
+                            <th>Employer ID</th>
+                            <th>Company Name</th>
+                            <th>Email</th>
+                            <th>Business License</th>
+                            <th>Registration Docs</th>
+                            <th>Status</th>
                             <th>Accept</th>
                             <th>Reject</th>
                             </thead>
@@ -147,67 +145,40 @@ if ($result->num_rows > 0) {
 
 
                                 
-                             <?php 
-                             //$sql="select id,sid,pid,(select name from seeker where id=j.sid)as sname,date,"
-                             //        . "(select name from post where id=j.pid)as title,"
-                             //        . "(select course from seeker where id=j.sid)as course,"
-                             //        . "status from jobsapplied j where pid in (select id from post where eid=$eid);"; 
-                             //$sql="select id,sid,pid,(select name from seeker where id=j.sid)as sname,date,"
-                                     //. "(select name from post where id=j.pid)as title,"
-                                     //. "(select course from seeker where id=j.sid)as course,"
-                                     //. "status from jobsapplied j where pid";
-                            $sql = "select id, name, university, course, status, attachment_letter, school_id, dob from seeker";
-                             $appresult = $conn->query($sql);
-                        if ($appresult->num_rows > 0) {
-                            // output data of each row
-                             while($row = $appresult->fetch_assoc()) 
-                                 {
+                            <?php 
+                        // Fetch employer registrations
+                        $sql = "select * from employer";
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            while($row = $result->fetch_assoc()) {
                                 $id = $row['id'];
                                 $name = $row['name'];
-                                $university=$row['university'];
-                                $dob=$row['dob'];
-                                $course=$row['course'];
-                                $status=$row['status'];
-                                $attachment_letter=$row['attachment_letter'];
-                                $school_id=$row['school_id'];
+                                $email = $row['email'];
+                                $license = $row['business_license'];
+                                $registration = $row['businessReg'];
+                                $status = $row['status'];
 
                                 ?>
                                 <tr>
                                     <td><?php echo $id;?></td>
                                     <td><?php echo $name;?></td>
-                                    <td><?php echo $dob;?></td>
-                                    <td><?php echo $university;?></td>
-                                    <td><?php echo $course;?></td>
+                                    <td><?php echo $email;?></td>
+                                    <td><?php if($license) { ?><a href="<?php echo $license; ?>" target="_blank">View</a><?php } ?></td>
+                                    <td><?php if($registration) { ?><a href="<?php echo $registration; ?>" target="_blank">View</a><?php } ?></td>
                                     <td><?php echo $status;?></td>
-                                    <td><a href="<?php echo $attachment_letter; ?>" target="_blank">View/Download</a></td>
-                                    <td><a href="<?php echo $school_id; ?>" target="_blank">View/Download</a></td>
-                                    <td><a href="acceptRegistration.php?id=<?php echo $id; ?>&type=student"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                    <td><a href="rejectRegistration.php?id=<?php echo $id; ?>&type=student"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
+                                    <td><a href="acceptRegistration.php?id=<?php echo $id; ?>&type=employer"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                    <td><a href="rejectRegistration.php?id=<?php echo $id; ?>&type=employer"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
                                 </tr>
                                 <?php
-                                 }}  
-                              ?>
-                                
+                            }
+                        } ?>   
                             </tbody>
                         </table>
                         
                     </div>   
 		</div>                       
-		
-		
-		
-	
-	
-	
-</div>
-  
-       
-    
-</div>
-
-       
-        
-        
+</div>    
+</div>    
 <!--first row -->
  
 <script src="js/tilt.jquery.min.js"></script>
