@@ -1,5 +1,5 @@
 <?php include 'authorizeEmployer.php'; ?>
-<html>
+<!DOCTYPE html>
 
 <head>
 
@@ -28,6 +28,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200&display=swap" rel="stylesheet">
 
     <style>
+        
+        .container-fluid {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .hero {
+            margin-top: 20px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .col-md-6 {
+                padding-top: 20px;
+                text-align: center;
+            }
+
+            .col-md-12 {
+                padding-top: 20px;
+            }
+
+            .pc {
+                margin: 0 auto;
+                display: block;
+            }
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
         .tiltContain {
             margin-top: 0%;
         }
@@ -122,6 +152,7 @@
                     <div>
                         <h3 style=" padding-bottom: 30px;">Applications Received:</h3>
                     </div>
+                    <div class="table-container">
                     <table class="table table-hover table-responsive table-striped" id='jobappliedTable'>
                         <thead>
                             <th>Post Id</th>
@@ -130,6 +161,7 @@
                             <th>Job Title</th>
                             <th>Applicant's Course</th>
                             <th>Application Status</th>
+                            <th>View CV</th>
                             <th>Accept</th>
                             <th>Reject</th>
                         </thead>
@@ -152,7 +184,6 @@
                                     $date = $row['date'];
                                     $course = $row['course'];
                                     $status = $row['status'];
-                                    $resume = $row['resume'];
 
                             ?>
                                     <tr>
@@ -162,6 +193,7 @@
                                         <td><?php echo $title; ?></td>
                                         <td><?php echo $course; ?></td>
                                         <td><?php echo $status; ?></td>
+                                        <td><a href="view_cv.php?user_id=<?php echo $row['sid']; ?>" class="btn">View CV</a></td>
                                         <td><a href="acceptApplication.php?id=<?php echo $id;?>"><span class="glyphicon glyphicon-ok"></span></a></td>
                                         <td><a href="rejectApplication.php?id=<?php echo $id;?>"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
                                     </tr>
@@ -172,24 +204,11 @@
 
                         </tbody>
                     </table>
-
+                    </div>
                 </div>
             </div>
-
-
-
-
-
-
         </div>
-
-
-
     </div>
-
-
-
-
     <!--first row -->
 
     <script src="js/tilt.jquery.min.js"></script>

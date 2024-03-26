@@ -9,10 +9,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $password = $_POST["password"];
+    $targetDir = "uploads/";
+    $businessRegDir = "BusinessRegistrationDocs/";
+    $business_licensesDir = "BusinessLicensesDocs/";
+    $businessReg = $_FILES["businessReg"]["name"];
+    $businessLicense = $_FILES["business_license"]["name"];
+    $businessRegPath = $targetDir . $businessRegDir . basename($businessReg);
+    $businessLicensePath = $targetDir . $business_licensesDir . basename($businessLicense);
+    
+    // Move uploaded files to the uploads directory
+    move_uploaded_file($_FILES["businessReg"]["tmp_name"], $businessRegPath);
+    move_uploaded_file($_FILES["business_license"]["tmp_name"], $businessLicensePath);
 
 
 
-    $sql = "INSERT INTO employer (name,email,password) VALUES ('$name', '$email', '$password')";
+    $sql = "INSERT INTO employer (name,email,password,businessReg, business_license) VALUES ('$name', '$email', '$password', '$businessRegPath', '$businessLicensePath')";
 
     if ($conn->query($sql) === TRUE) {
 
